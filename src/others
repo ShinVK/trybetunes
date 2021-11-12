@@ -1,1 +1,41 @@
         <Route path="/" component={} />
+render() {
+    const { searchInput, load, nameSearched, request } = this.state;
+    const MINLETTER = 2;
+    return ((load) ? <Loading />
+      : (
+        <>
+          <Header />
+          <div data-testid="page-search">
+            <h2>Search Page</h2>
+            <form>
+              <input
+                type="text"
+                data-testid="search-artist-input"
+                placeholder="Nome do artista"
+                name="searchInput"
+                value={ searchInput }
+                onChange={ this.onHandleChanger }
+              />
+              <button
+                type="submit"
+                data-testid="search-artist-button"
+                disabled={ searchInput.length < MINLETTER }
+                onClick={ this.onHandleSearchClick }
+              >
+                Procurar
+              </button>
+            </form>
+            {(load) ? <Loading />
+              : (
+                <h2>
+                  {`Resultado de álbuns de: ${nameSearched}`}
+                </h2>
+              )}
+            {(request) && this.renderAlbums() }
+          </div>
+        </>
+      )
+    );
+  }
+}

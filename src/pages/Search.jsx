@@ -43,7 +43,6 @@ export default class Search extends Component {
 
   renderAlbums() {
     const { data } = this.state;
-    console.log(data);
     return (data.length === 0) ? <p>Nenhum álbum foi encontrado</p>
       : (
         data.map((album) => (
@@ -63,40 +62,38 @@ export default class Search extends Component {
   render() {
     const { searchInput, load, nameSearched, request } = this.state;
     const MINLETTER = 2;
-    return ((load) ? <Loading />
-      : (
-        <>
-          <Header />
-          <div data-testid="page-search">
-            <h2>Search Page</h2>
-            <form>
-              <input
-                type="text"
-                data-testid="search-artist-input"
-                placeholder="Nome do artista"
-                name="searchInput"
-                value={ searchInput }
-                onChange={ this.onHandleChanger }
-              />
-              <button
-                type="submit"
-                data-testid="search-artist-button"
-                disabled={ searchInput.length < MINLETTER }
-                onClick={ this.onHandleSearchClick }
-              >
-                Procurar
-              </button>
-            </form>
-            {(load) ? <Loading />
-              : (
-                <h2>
-                  {`Resultado de álbuns de: ${nameSearched}`}
-                </h2>
-              )}
-            {(request) && this.renderAlbums() }
-          </div>
-        </>
-      )
+    return (
+      <>
+        <Header />
+        <div data-testid="page-search">
+          <h2>Search Page</h2>
+          <form>
+            <input
+              type="text"
+              data-testid="search-artist-input"
+              placeholder="Nome do artista"
+              name="searchInput"
+              value={ searchInput }
+              onChange={ this.onHandleChanger }
+            />
+            <button
+              type="submit"
+              data-testid="search-artist-button"
+              disabled={ searchInput.length < MINLETTER }
+              onClick={ this.onHandleSearchClick }
+            >
+              Procurar
+            </button>
+          </form>
+          {(load) ? <Loading />
+            : (
+              <h2>
+                {`Resultado de álbuns de: ${nameSearched}`}
+              </h2>
+            )}
+          {(request) && this.renderAlbums() }
+        </div>
+      </>
     );
   }
 }
