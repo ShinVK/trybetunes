@@ -50,7 +50,10 @@ export default class Search extends Component {
             <img src={ album.artworkUrl100 } alt={ album.collectionName } />
             <h2>{ album.artistName }</h2>
             <Link
-              to={ `/album/${album.collectionId}` }
+              to={ {
+                pathname: `/album/${album.collectionId}`,
+                query: { idCol: album.collectionId },
+              } }
               data-testid={ `link-to-album-${album.collectionId}` }
             >
               { album.collectionName }
