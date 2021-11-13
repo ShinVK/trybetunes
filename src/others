@@ -39,3 +39,35 @@ render() {
     );
   }
 }
+
+<Link
+to={ {
+  pathname: `/album/${album.collectionId}`,
+  query: { idCol: album.collectionId },
+} }
+data-testid={ `link-to-album-${album.collectionId}` }
+>
+{ album.collectionName }
+</Link>
+
+renderTracks() {
+  const { dataAlbum } = this.state;
+  return (
+    <section className="sectionTracks">
+      <div className="cardAlbum">
+        <h2 data-testid="artist-name">{ dataAlbum.artistName }</h2>
+        <p data-testid="album-name">
+          { `Album: ${dataAlbum.collectionName}
+          Artista: ${dataAlbum.artistName}`}
+        </p>
+        <img
+          src={ dataAlbum.artworkUrl100 }
+          alt={ dataAlbum.collectionCensoredName }
+        />
+      </div>
+    </section>
+  );
+}
+
+const urlId = window.location.pathname;
+const colId = urlId.replace(/[^0-9]/g, '');
