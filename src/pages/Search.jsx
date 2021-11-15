@@ -37,7 +37,7 @@ export default class Search extends Component {
     const { searchInput } = this.state;
     e.preventDefault();
     this.setState({ load: true, nameSearched: searchInput });
-    await searchAlbumsAPI(searchInput.toLowerCase())
+    await searchAlbumsAPI(searchInput)
       .then((album) => this.setState({ data: album }));
     this.setState({ load: false, request: true, searchInput: '' });
   }

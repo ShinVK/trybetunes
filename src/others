@@ -71,3 +71,10 @@ renderTracks() {
 
 const urlId = window.location.pathname;
 const colId = urlId.replace(/[^0-9]/g, '');
+
+Requisito 8
+1º fazer um constructor com state
+2º Fazer chave com trackId.
+3º Dentro da chave trackId, fazer um objeto com a chave checked.
+4º Sempre que alterar o estado, rodar o componentDidMount, com a função que vai rastrear os itens que tem o checked true;
+5º ou fazer uma chave checked com os itens dentro dele
