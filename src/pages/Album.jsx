@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import Loading from '../components/Loading';
 
 export default class Album extends Component {
@@ -29,18 +29,20 @@ export default class Album extends Component {
 
   async onHandleChangeChecked(dataTrack) {
     const { favoritesMusics } = this.state;
-    if (favoritesMusics.some(({ trackId }) => trackId === dataTrack.trackId)) {
-      const indexMusic = favoritesMusics
-        .findIndex(({ trackId }) => trackId === dataTrack.trackId);
-      const favMus = [...favoritesMusics];
-      favMus.splice(indexMusic, 1);
-      return (
-        this.setState({
-          favoritesMusics: [...favMus],
-        }));
-    }
     this.setState({ load: true });
-    await addSong(dataTrack);
+    if (favoritesMusics.some(({ trackId }) => trackId === dataTrack.trackId)) {
+      await removeSong(dataTrack);
+      // const indexMusic = favoritesMusics
+      //   .findIndex(({ trackId }) => trackId === dataTrack.trackId);
+      // const favMus = [...favoritesMusics];
+      // favMus.splice(indexMusic, 1);
+      // return (
+      //   this.setState({
+      //     favoritesMusics: [...favMus],
+      //   }));
+    } else {
+      await addSong(dataTrack);
+    }
     await getFavoriteSongs().then((res) => this.setState(() => ({
       favoritesMusics: res,
     })));
