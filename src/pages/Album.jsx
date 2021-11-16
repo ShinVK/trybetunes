@@ -7,8 +7,8 @@ import { addSong } from '../services/favoriteSongsAPI';
 import Loading from '../components/Loading';
 
 export default class Album extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       load: false,
       dataAlbum: [],
@@ -25,9 +25,8 @@ export default class Album extends Component {
 
   // https://stackoverflow.com/questions/42597602/react-onclick-pass-event-with-parameter
 
-  async onHandleChangeChecked({ target: { id } }, trackId) {
+  async onHandleChangeChecked({ target: { id, checked } }, trackId) {
     const { favoritesMusics } = this.state;
-    // console.log(trackId);
     if (favoritesMusics.includes(id)) {
       const indexMusic = favoritesMusics.indexOf(id);
       const favMus = [...favoritesMusics];
@@ -37,14 +36,13 @@ export default class Album extends Component {
           favoritesMusics: [...favMus],
         }));
     }
+    this.setState({ load: true });
+    await addSong(trackId);
     this.setState((prev) => ({
       favoritesMusics: [...prev.favoritesMusics, id],
-      load: true,
     }));
-    await addSong(trackId);
     this.setState({ load: false });
   }
-
   // includesInFavoritesMusics(id) {
   //   const { favoritesMusics } = this.state;
   //   favoritesMusics.some((trackId) => trackId === id);
@@ -84,7 +82,7 @@ export default class Album extends Component {
           </p>
           <img
             src={ dataAlbum.artworkUrl100 }
-            alt={ dataAlbum.collectionCensoredName }
+            alt="Capa de album"
           />
         </div>
       </section>
@@ -95,30 +93,27 @@ export default class Album extends Component {
   // const { location: { query: { idCol } } } = this.props;
   render() {
     const { dataTracks, load, favoritesMusics } = this.state;
-    return ((load) ? <Loading />
-      : (
-        <>
-          <Header />
-          <div data-testid="page-album">
-            {this.renderTracks()}
-            {dataTracks.map((dataTrack) => {
-              const isChecked = favoritesMusics
-                .includes(`${dataTrack.trackId}`);
-              return (
-                <MusicCard
-                  key={ dataTrack.trackId }
-                  onHandleChange={ (e) => this.onHandleChangeChecked(e, dataTrack) }
-                  isChecked={ isChecked }
-                  trackId={ dataTrack.trackId }
-                  trackName={ dataTrack.trackName }
-                  previewUrl={ dataTrack.previewUrl }
-                />
-              );
-            })}
-          </div>
-        </>
-      )
-
+    return (
+      <>
+        <Header />
+        <div data-testid="page-album">
+          {this.renderTracks()}
+          {dataTracks.map((dataTrack) => {
+            const isChecked = favoritesMusics
+              .includes(`${dataTrack.trackId}`);
+            return (
+              <MusicCard
+                key={ dataTrack.trackId }
+                onHandleChange={ (e) => this.onHandleChangeChecked(e, dataTrack) }
+                isChecked={ isChecked }
+                trackId={ dataTrack.trackId }
+                trackName={ dataTrack.trackName }
+                previewUrl={ dataTrack.previewUrl }
+              />);
+          })}
+          { (load) ? <Loading /> : null }
+        </div>
+      </>
     );
   }
 }

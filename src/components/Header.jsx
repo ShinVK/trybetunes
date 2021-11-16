@@ -8,7 +8,7 @@ export default class Header extends Component {
     super();
     this.state = {
       loginName: '',
-      load: false,
+      load: true,
     };
     this.getUserAndRemoveLoad = this.getUserAndRemoveLoad.bind(this);
   }
@@ -18,7 +18,6 @@ export default class Header extends Component {
   }
 
   async getUserAndRemoveLoad() {
-    this.setState({ load: true });
     await getUser().then(({ name }) => this.setState({
       loginName: name,
       load: false,
