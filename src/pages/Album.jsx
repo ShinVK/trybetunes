@@ -41,9 +41,9 @@ export default class Album extends Component {
     }
     this.setState({ load: true });
     await addSong(dataTrack);
-    this.setState((prev) => ({
-      favoritesMusics: [...prev.favoritesMusics, dataTrack],
-    }));
+    await getFavoriteSongs().then((res) => this.setState(() => ({
+      favoritesMusics: res,
+    })));
     this.setState({ load: false });
   }
   // includesInFavoritesMusics(id) {
