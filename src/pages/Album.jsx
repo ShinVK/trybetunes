@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from '../components/Loading';
 
 export default class Album extends Component {
@@ -17,18 +17,21 @@ export default class Album extends Component {
     };
     this.fetchMusics = this.fetchMusics.bind(this);
     this.onHandleChangeChecked = this.onHandleChangeChecked.bind(this);
+    this.getFavorites = this.getFavorites.bind(this);
   }
 
   componentDidMount() {
     this.fetchMusics();
+    this.getFavorites();
   }
 
   // https://stackoverflow.com/questions/42597602/react-onclick-pass-event-with-parameter
 
-  async onHandleChangeChecked({ target: { id, checked } }, trackId) {
+  async onHandleChangeChecked(dataTrack) {
     const { favoritesMusics } = this.state;
-    if (favoritesMusics.includes(id)) {
-      const indexMusic = favoritesMusics.indexOf(id);
+    if (favoritesMusics.some(({ trackId }) => trackId === dataTrack.trackId)) {
+      const indexMusic = favoritesMusics
+        .findIndex(({ trackId }) => trackId === dataTrack.trackId);
       const favMus = [...favoritesMusics];
       favMus.splice(indexMusic, 1);
       return (
@@ -37,9 +40,9 @@ export default class Album extends Component {
         }));
     }
     this.setState({ load: true });
-    await addSong(trackId);
+    await addSong(dataTrack);
     this.setState((prev) => ({
-      favoritesMusics: [...prev.favoritesMusics, id],
+      favoritesMusics: [...prev.favoritesMusics, dataTrack],
     }));
     this.setState({ load: false });
   }
@@ -47,6 +50,16 @@ export default class Album extends Component {
   //   const { favoritesMusics } = this.state;
   //   favoritesMusics.some((trackId) => trackId === id);
   // }
+
+  async getFavorites() {
+    this.setState({ load: true });
+    await getFavoriteSongs().then((result) => this.setState({
+      favoritesMusics: result,
+    }));
+    this.setState({
+      load: false,
+    });
+  }
 
   // const { location: { query: { idCol } } } = this.props;
   // https://www.codegrepper.com/code-examples/javascript/get+only+numbers+from+string+js
@@ -98,20 +111,20 @@ export default class Album extends Component {
         <Header />
         <div data-testid="page-album">
           {this.renderTracks()}
+          { (load) ? <Loading /> : null }
           {dataTracks.map((dataTrack) => {
             const isChecked = favoritesMusics
-              .includes(`${dataTrack.trackId}`);
+              .some((fav) => fav.trackId === dataTrack.trackId);
             return (
               <MusicCard
                 key={ dataTrack.trackId }
-                onHandleChange={ (e) => this.onHandleChangeChecked(e, dataTrack) }
+                onHandleChange={ () => this.onHandleChangeChecked(dataTrack) }
                 isChecked={ isChecked }
                 trackId={ dataTrack.trackId }
                 trackName={ dataTrack.trackName }
                 previewUrl={ dataTrack.previewUrl }
               />);
           })}
-          { (load) ? <Loading /> : null }
         </div>
       </>
     );

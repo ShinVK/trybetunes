@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 
 export default class MusicCard extends Component {
   render() {
-    const { trackId, trackName, previewUrl, onHandleChange, isChecked } = this.props;
+    const {
+      trackId,
+      trackName,
+      previewUrl,
+      onHandleChange,
+      isChecked } = this.props;
     // console.log(isChecked);
     // console.log('rodou de novo');
     // const { favoritesMusics } = this.state;
@@ -34,7 +39,6 @@ export default class MusicCard extends Component {
 }
 
 MusicCard.propTypes = {
-  // musicTracks: PropTypes.arrayOf(PropTypes.object).isRequired,
   trackId: PropTypes.number.isRequired,
   trackName: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
