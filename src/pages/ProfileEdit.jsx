@@ -83,7 +83,7 @@ export default class ProfileEdit extends Component {
                   <button
                     type="submit"
                     data-testid="edit-button-save"
-                    disabled={ this.isDisabled() }
+                    // disabled={ this.isDisabled() }
                   >
                     Salvar
                   </button>
