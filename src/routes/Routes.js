@@ -7,14 +7,13 @@ import Favorites from '../pages/Favorites';
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import ProfileEdit from '../pages/ProfileEdit';
-import Search from '../pages/Search';
-import Search2 from '../pages/Search copy';
+// import Search from '../pages/Search';
+import Search2 from '../pages/Search2';
 
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/search" exact component={ Search } />
-      <Route path="/testsearch" exact component={ Search2 } />
+      <Route path="/search" exact component={ Search2 } />
       <Route path="/album/:id" component={ Album } />
       <Route path="/favorites" component={ Favorites } />
       <Route path="/profile" exact component={ Profile } />
