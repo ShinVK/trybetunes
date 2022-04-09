@@ -19,13 +19,6 @@ export default class Search extends Component {
     this.onHandleSearchClick = this.onHandleSearchClick.bind(this);
     this.renderAlbums = this.renderAlbums.bind(this);
   }
-  // componentDidMount() {
-  //   this.onHandleSearchClick();
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   this.s
-  // }
 
   onHandleChanger(e) {
     this.setState({

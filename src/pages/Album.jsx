@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 
 import Header from '../components/Header';
@@ -66,8 +67,9 @@ export default class Album extends Component {
   // const { location: { query: { idCol } } } = this.props;
   // https://www.codegrepper.com/code-examples/javascript/get+only+numbers+from+string+js
   fetchMusics() {
-    const urlId = window.location.pathname;
-    const colId = urlId.replace(/[^0-9]/g, '');
+    const { location: { pathname } } = this.props;
+    const colId = pathname.replace(/[^0-9]/g, '');
+
     getMusics(colId).then(([album, ...tracks]) => this.setState(
       { dataAlbum: album,
         dataTracks: tracks,
@@ -88,19 +90,22 @@ export default class Album extends Component {
   renderTracks() {
     const { dataAlbum } = this.state;
     return (
-      <section className="sectionTracks">
-        <div className="cardAlbum">
-          <h2 data-testid="artist-name">{ dataAlbum.artistName }</h2>
-          <p data-testid="album-name">
-            { `Album: ${dataAlbum.collectionName}
+      (dataAlbum
+        && (
+          <section className="sectionTracks">
+            <div className="cardAlbum">
+              <h2 data-testid="artist-name">{ dataAlbum.artistName }</h2>
+              <p data-testid="album-name">
+                { `Album: ${dataAlbum.collectionName}
             Artista: ${dataAlbum.artistName}`}
-          </p>
-          <img
-            src={ dataAlbum.artworkUrl100 }
-            alt="Capa de album"
-          />
-        </div>
-      </section>
+              </p>
+              <img
+                src={ dataAlbum.artworkUrl100 }
+                alt="Capa de album"
+              />
+            </div>
+          </section>
+        ))
     );
   }
 

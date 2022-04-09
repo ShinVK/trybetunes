@@ -1,10 +1,30 @@
+@font-face {
+  font-family: 'Sinkin';
+  src: local('Sinkin'), url(./assets/fonts/SinkinSans-400Regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'JustSimple';
+  src: local('JustSimple'), url(./assets/fonts/Just\ Simple.ttf) format('opentype');
+}
+
+@font-face {
+  font-family: 'WildFont';
+  src: local('WildFont'), url(./assets/fonts/somethingwild-Regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Bellaboo';
+  src: local('Bellaboo'), url(./assets/fonts/BELLABOO-Regular.otf) format('opentype');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
 }
 
 code {
@@ -17,3 +37,13 @@ code {
   display: flex;
   justify-content: center;
 }
+
+input:-webkit-autofill {
+  box-shadow:  0 0 0 30px #ffe05b inset ;
+  -webkit-box-shadow: 0 0 0 30px #ffe05b inset;
+}
+
+/* Cor do texto do autocomplete */
+/* input:-webkit-autofill {
+  -webkit-text-fill-color: blue !important;
+} */
