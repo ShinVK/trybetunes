@@ -13,11 +13,11 @@ import Search2 from '../pages/Search2';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/search" exact component={ Search2 } />
-      <Route path="/album/:id" component={ Album } />
-      <Route path="/favorites" component={ Favorites } />
-      <Route path="/profile" exact component={ Profile } />
-      <Route path="/profile/edit" exact component={ ProfileEdit } />
+      <Route path="/trybetunes/search" exact component={ Search2 } />
+      <Route path="/trybetunes/album/:id" component={ Album } />
+      <Route path="/trybetunes/favorites" component={ Favorites } />
+      <Route path="/trybetunes/profile" exact component={ Profile } />
+      <Route path="/trybetunes/profile/edit" exact component={ ProfileEdit } />
       <Route path="/" exact component={ Home } />
       <Route path="*" component={ NotFound } />
     </Switch>

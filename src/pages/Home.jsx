@@ -52,7 +52,7 @@ export default function Home() {
           </Typography>
           <IconButton
             sx={ { ml: { lg: 10 }, mt: 20 } }
-            onClick={ () => history.push('/search') }
+            onClick={ () => history.push('/trybetunes/search') }
           >
             <PlayCircleOutlineIcon
               sx={ { fontSize: { xs: 60, sm: 90, md: 120, lg: 180 } } }
