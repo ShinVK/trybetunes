@@ -8,7 +8,6 @@ import { CardActionArea } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 export default function AlbumCard({ album }) {
-  console.log(album);
   const history = useHistory();
   const { artworkUrl100, collectionName,
     artistName, collectionId,

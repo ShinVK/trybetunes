@@ -195,7 +195,7 @@ export default class Search extends Component {
         >
           <Grid container>
             {(request) && data.map((el, i) => (
-              <Grid key={ i } xs={ 6 } md={ 4 } lg={ 2.4 } sx={ { mt: 5 } }>
+              <Grid item key={ i } xs={ 6 } md={ 4 } lg={ 2.4 } sx={ { mt: 5 } }>
                 <div style={ { display: 'flex', justifyContent: 'center' } }>
                   <AlbumCard album={ el } />
                 </div>
