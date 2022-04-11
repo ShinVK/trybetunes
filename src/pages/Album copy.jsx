@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 
+import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 // import MusicCard from '../components/MusicCard';
 import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
@@ -109,15 +110,37 @@ export default class Album extends Component {
     );
   }
 
+  // console.log(this.props.location.query.idCol);
+  // const { location: { query: { idCol } } } = this.props;
   render() {
     const { dataTracks, load } = this.state;
+    // const { dataTracks, load, favoritesMusics } = this.state;
 
     return (
-      <div data-testid="page-album">
-        { (load) ? <Loading /> : null }
+      <>
+        <Header />
+        <div data-testid="page-album">
+          {this.renderTracks()}
+          { (load) ? <Loading /> : null }
 
-        <PlayerMusicAlbum musics={ dataTracks } />
-      </div>
+          {dataTracks.map(({ previewUrl }, i) => (
+            <PlayerMusicAlbum key={ i } music={ previewUrl } />
+          ))}
+          {/* {dataTracks.map((dataTrack) => {
+            const isChecked = favoritesMusics
+              .some((fav) => fav.trackId === dataTrack.trackId);
+            return (
+              <MusicCard
+                key={ dataTrack.trackId }
+                onHandleChange={ () => this.onHandleChangeChecked(dataTrack) }
+                isChecked={ isChecked }
+                trackId={ dataTrack.trackId }
+                trackName={ dataTrack.trackName }
+                previewUrl={ dataTrack.previewUrl }
+              />);
+          })} */}
+        </div>
+      </>
     );
   }
 }

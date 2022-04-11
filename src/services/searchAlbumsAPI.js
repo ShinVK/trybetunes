@@ -1,7 +1,8 @@
 const searchAlbumsAPI = async (artist) => {
   const artistNoNumber = artist.replace(/[0-9]/g, '').toLowerCase();
   const artistNameURL = encodeURI(artistNoNumber).replaceAll('%20', '+');
-
+  // na hora que acabar e fazer o deploy colocar esse
+  // const getAlbumsAPI = `https://itunes.apple.com/search?entity=album&term=${artistNameURL}&attribute=artistTerm`;
   const getAlbumsAPI = `https://itunes.apple.com/search?entity=album&term=${artistNameURL}&attribute=allArtistTerm`;
   console.log(getAlbumsAPI);
   const APIResponse = await fetch(getAlbumsAPI);

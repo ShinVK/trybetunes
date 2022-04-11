@@ -1,9 +1,42 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-max-depth */
+import {
+  Container,
+  Grid, Paper,
+  Typography, InputBase, Divider,
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-import Header from '../components/Header';
+// import { useHistory } from 'react-router-dom';
+
 import Loading from '../components/Loading';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
+// import Albums from './Albums';
+
+import backgroundCard from '../assets/imgs/backgroundCard.avif';
+import background1 from '../assets/imgs/back3.avif';
+import AlbumCard from '../components/AlbumCard';
+
+const styles = {
+  paperContainer: {
+    // eslint-disable-next-line max-len
+    backgroundImage: `url(${background1})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+};
+
+const backCards = {
+  paperContainer: {
+    // eslint-disable-next-line max-len
+    backgroundImage: `url(${backgroundCard})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+};
 
 export default class Search extends Component {
   constructor() {
@@ -12,12 +45,11 @@ export default class Search extends Component {
       nameSearched: '',
       searchInput: '',
       load: false,
-      data: '',
+      data: [],
       request: false,
     };
     this.onHandleChanger = this.onHandleChanger.bind(this);
     this.onHandleSearchClick = this.onHandleSearchClick.bind(this);
-    this.renderAlbums = this.renderAlbums.bind(this);
   }
 
   onHandleChanger(e) {
@@ -35,62 +67,143 @@ export default class Search extends Component {
     this.setState({ load: false, request: true, searchInput: '' });
   }
 
-  renderAlbums() {
-    const { data } = this.state;
-    return (data.length === 0) ? <p>Nenhum álbum foi encontrado</p>
-      : (
-        data.map((album) => (
-          <div key={ album.collectionId }>
-            <img src={ album.artworkUrl100 } alt={ album.collectionName } />
-            <h2>{ album.artistName }</h2>
-            <Link
-              to={ {
-                pathname: `/album/${album.collectionId}`,
-                query: { idCol: album.collectionId },
-              } }
-              data-testid={ `link-to-album-${album.collectionId}` }
-            >
-              { album.collectionName }
-            </Link>
-          </div>
-        )));
-  }
-
   render() {
-    const { searchInput, load, nameSearched, request } = this.state;
-    const MINLETTER = 2;
+    const { searchInput, load, nameSearched, request, data } = this.state;
+
     return (
-      <>
-        <Header />
-        <div data-testid="page-search">
-          <h2>Search Page</h2>
-          <form>
-            <input
-              type="text"
-              data-testid="search-artist-input"
-              placeholder="Nome do artista"
-              name="searchInput"
-              value={ searchInput }
-              onChange={ this.onHandleChanger }
-            />
-            <button
-              type="submit"
-              data-testid="search-artist-button"
-              disabled={ searchInput.length < MINLETTER }
-              onClick={ this.onHandleSearchClick }
+      <Container maxWidth="lg">
+
+        <Paper
+          style={ styles.paperContainer }
+          sx={ { width: '100%',
+            height: '50vh' } }
+        >
+          <Grid container>
+            <Grid item xs={ 12 } md={ 6 }>
+              <Paper
+                component="form"
+                elevation={ 20 }
+                sx={ {
+                  p: '2px 4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: { xs: '92%', lg: '55%' },
+                  mt: 5,
+                  ml: { xs: 'auto', lg: 3 },
+                  mr: 'auto',
+                  backgroundColor: '#ffe15be4' } }
+              >
+                <InputBase
+                  sx={ { ml: 1, flex: 1, color: '#011936d5', fontFamily: 'Bellaboo' } }
+                  placeholder="Buscar Banda ou Cantor"
+                  name="searchInput"
+                  value={ searchInput }
+                  onChange={ this.onHandleChanger }
+                  // inputProps={ { 'aria-label': 'search google maps' } }
+                />
+                <IconButton
+                  type="submit"
+                  sx={ { p: '10px' } }
+                  aria-label="search"
+                  onClick={ this.onHandleSearchClick }
+                >
+                  <MusicNoteIcon />
+                </IconButton>
+                <Divider sx={ { height: 28, m: 0.5 } } orientation="vertical" />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={ 12 } md={ 6 }>
+              <Typography
+                variant="h2"
+                component="h2"
+                color="secondary"
+                sx={ {
+                  fontSize: { xs: 100, sm: 80, md: 120, lg: 150 },
+                  fontFamily: 'WildFont',
+                  mt: -2,
+                  mr: { md: 2 },
+                  ml: { md: 2 },
+                  textAlign: { xs: 'center', md: 'right' },
+                } }
+              >
+                TRYBETUNES
+              </Typography>
+              <Typography
+                variant="h2"
+                component="h2"
+                sx={ {
+                  fontSize: { xs: 10, sm: 10, md: 15, lg: 20 },
+                  fontFamily: 'Sinkin',
+                  mt: { xs: -1, sm: 2, md: -2 },
+                  mr: { md: 2 },
+                  ml: { md: 2 },
+                  color: '#7692ff',
+                  textAlign: { xs: 'center', md: 'right' },
+                } }
+              >
+                shinvk.github.io/trybetunes
+              </Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+        <Paper sx={ { backgroundColor: '#021022' } } elevation={ 15 }>
+          <Typography
+            variant="h2"
+            component="h2"
+            sx={ {
+              color: '#ffe15b',
+              fontSize: { xs: 30, sm: 40, md: 50, lg: 60 },
+              fontFamily: 'Bellaboo',
+              mt: -2,
+              pt: 5,
+              pb: 5,
+              mr: { md: 2 },
+              ml: { md: 2 },
+              textAlign: { xs: 'center', md: 'left' },
+            } }
+          >
+            Resultados
+          </Typography>
+        </Paper>
+
+        {(load) ? <Loading />
+          : (
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={ {
+                color: '#021022',
+                fontSize: { xs: 25, sm: 25, md: 30, lg: 40 },
+                fontFamily: 'Bellaboo',
+                mt: -2,
+                pt: 5,
+                pb: 5,
+                mr: { md: 2 },
+                ml: { md: 2 },
+                textAlign: { xs: 'center', md: 'left' },
+              } }
             >
-              Procurar
-            </button>
-          </form>
-          {(load) ? <Loading />
-            : (
-              <h2>
-                {`Resultado de álbuns de: ${nameSearched}`}
-              </h2>
-            )}
-          {(request) && this.renderAlbums() }
-        </div>
-      </>
+              {`Álbuns encontrados: ${nameSearched}`}
+            </Typography>
+          )}
+        <Paper
+          style={ backCards.paperContainer }
+          sx={ { width: '100%',
+            minHeight: '50vh' } }
+          elevation={ 24 }
+        >
+          <Grid container>
+            {(request) && data.map((el, i) => (
+              <Grid item key={ i } xs={ 6 } md={ 4 } lg={ 2.4 } sx={ { mt: 5 } }>
+                <div style={ { display: 'flex', justifyContent: 'center' } }>
+                  <AlbumCard album={ el } />
+                </div>
+              </Grid>
+            )) }
+          </Grid>
+        </Paper>
+      </Container>
     );
   }
 }
