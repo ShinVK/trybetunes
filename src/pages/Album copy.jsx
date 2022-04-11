@@ -126,6 +126,7 @@ export default class Album extends Component {
           {dataTracks.map(({ previewUrl }, i) => (
             <PlayerMusicAlbum key={ i } music={ previewUrl } />
           ))}
+
           {/* {dataTracks.map((dataTrack) => {
             const isChecked = favoritesMusics
               .some((fav) => fav.trackId === dataTrack.trackId);

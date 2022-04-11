@@ -12,6 +12,8 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Pause } from '@mui/icons-material';
 import background1 from '../assets/imgs/background1.jpg';
 
@@ -191,6 +193,9 @@ export default function PlayerMusicAlbum({ musics }) {
               )}
             <IconButton aria-label="next" onClick={ () => nextMusic() }>
               {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
+            </IconButton>
+            <IconButton>
+              <FavoriteBorderIcon />
             </IconButton>
           </Box>
         </Box>

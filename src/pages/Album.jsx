@@ -77,16 +77,6 @@ export default class Album extends Component {
     ));
   }
 
-  // async addSongToFavorites() {
-  //   const { favoritesMusics, dataTracks } = this.state;
-  //   this.setState({ loading: true });
-  //   favoritesMusics.map((musicId) => {
-  //     const objMus = dataTracks.filter(({ trackId }) => trackId === musicId);
-  //     return addSong(objMus);
-  //   });
-  //   this.setState({ loading: false });
-  // }
-
   renderTracks() {
     const { dataAlbum } = this.state;
     return (
@@ -110,13 +100,16 @@ export default class Album extends Component {
   }
 
   render() {
-    const { dataTracks, load } = this.state;
+    const { dataTracks, load, favoritesMusics } = this.state;
 
     return (
       <div data-testid="page-album">
         { (load) ? <Loading /> : null }
 
-        <PlayerMusicAlbum musics={ dataTracks } />
+        <PlayerMusicAlbum
+          musics={ dataTracks }
+          favorites={ favoritesMusics }
+        />
       </div>
     );
   }
